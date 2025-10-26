@@ -1,49 +1,63 @@
-#include <iostream>
-#include <string>
-#include <algorithm>
-#include <cstdio>
-#include <map>
+#include<bits/stdc++.h>
 using namespace std;
-map<string, int> server;
+int n;
+string a , b;
+map<string , int> q;
+int read()
+{
+	int asd = 0 , qwe = 1; char zxc;
+	while(!isdigit(zxc = getchar())) if(zxc = '-') qwe = -1;
+	while(isdigit(zxc)) asd = asd * 10 + (zxc - '0') , zxc = getchar();
+	return asd * qwe;
+}
+
 int main()
 {
-    int n;
-    cin >> n;
-    for (int i = 1; i <= n; i++)
-    {
-        string op;
-        cin >> op;
-        int a,b,c,d,e;
-        scanf("%d.%d.%d.%d:%d", &a, &b, &c, &d, &e);
-        if(a<0 || a>255 || b<0 || b>255 || c<0 || c>255 || d<0 || d>255 || e<0 || e>65535)
-        {
-            cout << "ERR" << endl;
-            continue;
-        }
-        string ad = to_string(a) + "." + to_string(b) + "." + 
-                    to_string(c) + "." + to_string(d) + ":" + 
-                    to_string(e);
-        if(op == "Server")
-        {
-            if(server[ad])
+	n = read();
+	for(int i = 1;i <= n;i++)
+	{
+		cin >> a >> b;
+		int x = 0 , y = 0 , flag = 1 , z = b.length();
+		for(int j = 1;j <= 5;j++ , x = 0)
+		{
+			if(!isdigit(b[y])) { flag = 0; break; }
+			if(b[y] == '0' && (y + 1 < z && isdigit(b[y + 1]))) { flag = 0; break; }
+			for(y;y < z && isdigit(b[y]);y++)
+			{
+				x = x * 10 + (int)(b[y] - '0');
+				if(j <= 4 && x > 255)
+                {
+                    flag = 0; break;
+                }
+				if(j == 5 && x > 65535)
+                {
+                    flag = 0; break;
+                }
+			}
+			if(j < 4 && b[y] != '.') {
+                flag = 0; break;
+                }
+			if(j == 4 && b[y] != ':') 
             {
-                cout << "FAIL" << endl;
-                continue;
+                flag = 0; break;
             }
-            server[ad] = i;
-            cout << "OK" << endl;
-        }
-        else if(op == "Client")
-        {
-            if(server[ad])
-            {
-                cout << server[ad] << endl;
-            }
-            else
-            {
-                cout << "FAIL" << endl;
-            }
-        }
-    }
-    return 0;
+			if(j != 5) y++;
+		}
+		if(flag == 0 || y != z)
+		{
+			cout << "ERR" << endl;
+			continue;
+		}
+		if(a[0] == 'S')
+		{
+			if(q[b] == 0) q[b] = i , cout << "OK" << endl;
+			else cout << "FAIL" << endl;
+		}
+		else
+		{
+			if(q[b] != 0) cout << q[b] << endl;
+			else cout << "FAIL" << endl;
+		}
+	}
+	return 0;
 }

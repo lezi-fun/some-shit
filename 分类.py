@@ -1,63 +1,132 @@
 import os
 import shutil
 import logging
+import time
 from pathlib import Path
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
 
-def setup_logging():
-    """设置日志记录"""
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(levelname)s - %(message)s',
-        datefmt='%Y-%m-%d %H:%M:%S'
-    )
-
-def create_destination_dirs(destination_dirs):
-    """创建目标目录（如果不存在）"""
-    for dir_path in destination_dirs.values():
-        Path(dir_path).mkdir(parents=True, exist_ok=True)
-        logging.info(f"确保目录存在: {dir_path}")
-
-def classify_files(source_dir, file_extensions, destination_dirs):
-    """分类文件"""
-    processed_files = 0
-    errors = []
+class FileClassifierHandler(FileSystemEventHandler):
+    """文件系统事件处理器，用于监控文件变化并自动分类"""
     
-    # 遍历源目录中的所有文件
-    for filename in os.listdir(source_dir):
-        file_path = os.path.join(source_dir, filename)
+    def __init__(self, source_dir, destination_dirs, file_extensions):
+        self.source_dir = source_dir
+        self.destination_dirs = destination_dirs
+        self.file_extensions = file_extensions
+        self.setup_logging()
         
-        # 跳过目录，只处理文件
+        # 创建目标目录
+        self.create_destination_dirs()
+        
+        # 记录最近处理过的文件，避免重复处理
+        self.recently_processed = {}
+        
+    def setup_logging(self):
+        """设置日志记录"""
+        logging.basicConfig(
+            level=logging.INFO,
+            format='%(asctime)s - %(levelname)s - %(message)s',
+            datefmt='%Y-%m-%d %H:%M:%S'
+        )
+    
+    def create_destination_dirs(self):
+        """创建目标目录（如果不存在）"""
+        for dir_path in self.destination_dirs.values():
+            Path(dir_path).mkdir(parents=True, exist_ok=True)
+            logging.info(f"确保目录存在: {dir_path}")
+    
+    def classify_file(self, file_path):
+        """分类单个文件"""
+        # 检查是否为文件
         if not os.path.isfile(file_path):
-            continue
+            return False
             
-        # 获取文件扩展名
+        filename = os.path.basename(file_path)
         _, ext = os.path.splitext(filename)
-        ext = ext.lower()  # 转换为小写以确保匹配
+        ext = ext.lower()
+        
+        # 防止重复处理：检查文件是否最近被处理过
+        current_time = time.time()
+        if file_path in self.recently_processed:
+            if current_time - self.recently_processed[file_path] < 2:  # 2秒内不重复处理
+                return False
         
         # 检查扩展名是否在映射中
-        if ext in file_extensions:
-            target_dir = destination_dirs[file_extensions[ext]]
+        if ext in self.file_extensions:
+            target_dir = self.destination_dirs[self.file_extensions[ext]]
             
             try:
                 # 复制文件到目标目录
                 shutil.copy2(file_path, target_dir)
-                logging.info(f"已复制: {filename} -> {target_dir}")
-                processed_files += 1
+                logging.info(f"已自动分类: {filename} -> {target_dir}")
+                
+                # 记录处理时间
+                self.recently_processed[file_path] = current_time
+                return True
                 
             except Exception as e:
-                error_msg = f"复制文件 {filename} 时出错: {str(e)}"
-                logging.error(error_msg)
-                errors.append(error_msg)
+                logging.error(f"分类文件 {filename} 时出错: {str(e)}")
+                return False
         else:
             logging.debug(f"跳过文件 {filename} (扩展名 {ext} 未在分类规则中)")
+            return False
     
-    return processed_files, errors
+    def on_modified(self, event):
+        """文件修改时触发"""
+        if not event.is_directory:
+            self.classify_file(event.src_path)
+    
+    def on_created(self, event):
+        """文件创建时触发"""
+        if not event.is_directory:
+            # 等待一小段时间，确保文件完全写入
+            time.sleep(0.5)
+            self.classify_file(event.src_path)
+    
+    def on_moved(self, event):
+        """文件移动时触发"""
+        if not event.is_directory:
+            self.classify_file(event.dest_path)
+
+def initial_classification(source_dir, file_extensions, destination_dirs):
+    """初始分类：处理已经存在的文件"""
+    logging.info("开始初始文件分类...")
+    processed_count = 0
+    
+    for filename in os.listdir(source_dir):
+        file_path = os.path.join(source_dir, filename)
+        if os.path.isfile(file_path):
+            handler = FileClassifierHandler(source_dir, destination_dirs, file_extensions)
+            if handler.classify_file(file_path):
+                processed_count += 1
+    
+    logging.info(f"初始分类完成，处理了 {processed_count} 个文件")
+
+def start_monitoring(source_dir, destination_dirs, file_extensions):
+    """开始监控目录"""
+    logging.info(f"开始监控目录: {source_dir}")
+    
+    # 创建事件处理器
+    event_handler = FileClassifierHandler(source_dir, destination_dirs, file_extensions)
+    
+    # 创建观察者
+    observer = Observer()
+    observer.schedule(event_handler, source_dir, recursive=False)
+    
+    # 启动观察者
+    observer.start()
+    
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        observer.stop()
+        logging.info("监控已停止")
+    
+    observer.join()
 
 def main():
     """主函数"""
-    # 设置日志
-    setup_logging()
-    
     # 定义目录路径
     source_dir = "/Users/desktop/Desktop/code/luogu"
     
@@ -86,30 +155,20 @@ def main():
         logging.error(f"源路径不是目录: {source_dir}")
         return
     
-    logging.info(f"开始处理源目录: {source_dir}")
+    print("文件自动分类监控器")
+    print("=" * 50)
+    print(f"监控目录: {source_dir}")
+    print("分类规则:")
+    for ext, category in file_extensions.items():
+        print(f"  {ext} -> {destination_dirs[category]}")
+    print("=" * 50)
+    print("按 Ctrl+C 停止监控")
     
-    try:
-        # 创建目标目录
-        create_destination_dirs(destination_dirs)
-        
-        # 分类文件
-        processed_files, errors = classify_files(source_dir, file_extensions, destination_dirs)
-        
-        # 输出结果摘要
-        print("\n" + "="*50)
-        print("文件分类完成!")
-        print(f"处理的文件数量: {processed_files}")
-        print(f"错误数量: {len(errors)}")
-        
-        if errors:
-            print("\n发生的错误:")
-            for error in errors:
-                print(f"  - {error}")
-        else:
-            print("所有文件处理成功!")
-            
-    except Exception as e:
-        logging.error(f"程序执行过程中发生错误: {str(e)}")
+    # 先进行初始分类
+    initial_classification(source_dir, file_extensions, destination_dirs)
+    
+    # 开始监控
+    start_monitoring(source_dir, destination_dirs, file_extensions)
 
 if __name__ == "__main__":
     main()
