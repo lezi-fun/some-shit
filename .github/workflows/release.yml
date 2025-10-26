@@ -6,7 +6,8 @@ on:
     types: [published]
   # 允许通过Web界面手动触发
   workflow_dispatch:
-
+permissions: 
+    contents: write packages:write
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
