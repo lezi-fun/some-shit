@@ -8,6 +8,7 @@ using namespace std;
 //e*d=(p-1)(q-1)+1
 //p <= q
 //p+q=n-e*d+2
+//p<=sqrt(n)
 int main()
 {
     int k;
