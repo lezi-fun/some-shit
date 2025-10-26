@@ -14,7 +14,7 @@ int main()
         int n,e,d;
         cin >> n >> e >> d;
         bool flag = false;
-        for (int p = 1 ; p <= 10000 ; p++)
+        for (int p = 1 ; p <= n; p++)
         {
             int q = n / p;
             if (p * q == n && (e * d == (p - 1) * (q - 1) + 1))
