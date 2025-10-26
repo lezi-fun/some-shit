@@ -1,4 +1,9 @@
-#include<bits/stdc++.h>
+#include <iostream>
+#include <string>
+#include <map>
+#include <cctype>
+#include <cstdio>
+
 using namespace std;
 int n;
 string a , b;
