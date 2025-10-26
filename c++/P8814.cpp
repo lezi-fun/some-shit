@@ -21,7 +21,8 @@ int main()
         int PplusQ = n - e*d + 2;
         for (int p = 1 ; p <= sqrtn; p++)
         {
-            int q = n / p;
+            int q = PplusQ - p;
+            if (p > q) break;
             if (p * q == n && (e * d == (p - 1) * (q - 1) + 1))
             {
                 cout << p << " " << q << endl;
