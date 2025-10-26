@@ -23,15 +23,11 @@ jobs:
       - name: Pack luogu directory to zip
         run: |
           zip -r luogu-release-v${{ github.event.release.tag_name }}.zip ./luogu/
-
-      # 3. 将打好的 ZIP 包上传到当前 Release
-# ... 其他部分保持不变
       - name: Upload release asset
-        uses: actions/upload-release-asset@v1
+        uses: actions/upload-release-asset@v2
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}  # 使用PAT而不是默认的GITHUB_TOKEN
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
           asset_path: ./luogu-release-v${{ github.event.release.tag_name }}.zip
           asset_name: luogu-release-v${{ github.event.release.tag_name }}.zip
-          asset_content_type: application/zip
