@@ -7,6 +7,7 @@ using namespace std;
 //n=p*q
 //e*d=(p-1)(q-1)+1
 //p <= q
+//p+q=n-e*d+2
 int main()
 {
     int k;
