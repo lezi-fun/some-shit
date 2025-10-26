@@ -1,33 +1,29 @@
 name: Create Release and Pack Zip
 
 on:
-  # 触发条件：当创建新的 Release 时自动运行
   release:
     types: [published]
-  # 允许通过Web界面手动触发
-  workflow_dispatch:
-permissions: 
-    contents: write packages:write
-jobs:
 
+jobs:
   build-and-release:
     runs-on: ubuntu-latest
+    # 添加这个权限配置
     permissions:
-      contents: write
+      contents: write  # 授予写入内容的权限
     steps:
-      # 1. 获取你的代码
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. 将 luogu 文件夹打包成 ZIP
       - name: Pack luogu directory to zip
         run: |
           zip -r luogu-release-v${{ github.event.release.tag_name }}.zip ./luogu/
+
       - name: Upload release asset
-        uses: actions/upload-release-asset@v2
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
           asset_path: ./luogu-release-v${{ github.event.release.tag_name }}.zip
           asset_name: luogu-release-v${{ github.event.release.tag_name }}.zip
+          asset_content_type: application/zip
