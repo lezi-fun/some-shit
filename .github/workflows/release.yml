@@ -4,6 +4,8 @@ on:
   # 触发条件：当创建新的 Release 时自动运行
   release:
     types: [published]
+  # 允许通过Web界面手动触发
+  workflow_dispatch:
 
 jobs:
   build-and-release:
