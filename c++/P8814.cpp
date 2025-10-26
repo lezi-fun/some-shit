@@ -1,6 +1,7 @@
 #include <cstdio>
 #include <iostream>
 #include <string>
+#include <cmath>
 #include <map>
 using namespace std;
 //n=p*q
@@ -14,7 +15,8 @@ int main()
         int n,e,d;
         cin >> n >> e >> d;
         bool flag = false;
-        for (int p = 1 ; p <= n; p++)
+        int qn = sqrt(n);
+        for (int p = 1 ; p <= n + 1; p++)
         {
             int q = n / p;
             if (p * q == n && (e * d == (p - 1) * (q - 1) + 1))
