@@ -9,8 +9,11 @@ on:
 permissions: 
     contents: write packages:write
 jobs:
+
   build-and-release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       # 1. 获取你的代码
       - name: Checkout code
