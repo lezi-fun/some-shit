@@ -1,0 +1,24 @@
+# 自动生成的同步元数据
+# 设备: ubuntu-server
+# 生成时间: 2025-10-28T20:06:02+08:00
+# 文件列表:
+
+test|1761652727|0|ubuntu-server
+.DS_Store|1761643955|10244|ubuntu-server
+LICENSE|1761643955|1069|ubuntu-server
+c++/.DS_Store|1761643955|6148|ubuntu-server
+c++/P5681.cpp|1761643955|292|ubuntu-server
+c++/P8814.cpp|1761643955|753|ubuntu-server
+c++/P7911.cpp|1761643955|1391|ubuntu-server
+.github/workflows/release.yml|1761643955|868|ubuntu-server
+file /test|1761643955|0|ubuntu-server
+分类.py|1761643955|5790|ubuntu-server
+.vscode/settings.json|1761643955|95|ubuntu-server
+.vscode/tasks.json|1761643955|750|ubuntu-server
+README.md|1761643955|122|ubuntu-server
+luogu/P5681.cpp|1761643955|292|ubuntu-server
+luogu/P8814.cpp|1761643955|753|ubuntu-server
+luogu/P1001.php|1761643955|1128|ubuntu-server
+luogu/P7911.cpp|1761643955|1391|ubuntu-server
+update.sh|1761643955|9069|ubuntu-server
+php/P1001.php|1761643955|1128|ubuntu-server
