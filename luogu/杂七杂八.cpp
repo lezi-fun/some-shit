@@ -1,4 +1,4 @@
-#incluude <iostream>
+#include <iostream>
 using namespace std;
 int main()
 {
@@ -13,7 +13,7 @@ int main()
     int cnt = 0;
     for (int i = 2 ; i <= n ; i++)
     {
-        if(a[i] = a[i - 1] + 1)cnt++;
+        if(a[i] == a[i - 1] + 1)cnt++;
         else cnt = 0;
         ans = max(ans , cnt + 1);
     }
