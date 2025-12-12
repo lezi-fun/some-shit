@@ -12,7 +12,8 @@ int main()
     {
         if (s[i] >= 'a' && s[i] <= 'z')
         {
-            cout <<char(s[i] - 'a' + n) % 26 + 'a';
+            char x = (s[i] - 'a' + n) % 26 + 'a';
+            cout << x;
         }
     }
     return 0;
