@@ -18,11 +18,22 @@
             "problemMatcher": [
                 "$gcc"
             ],
+            "group": "build",
+            "detail": "调试器生成的任务。"
+        },
+        {
+            "type": "java (build)",
+            "paths": [
+                "${workspace}"
+            ],
+            "isFullBuild": true,
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
-            "detail": "调试器生成的任务。"
+            "problemMatcher": [],
+            "label": "java (build): Build Workspace",
+            "detail": "$(tools) Build all the Java projects in workspace."
         }
     ],
     "version": "2.0.0"
