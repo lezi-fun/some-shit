@@ -13,7 +13,10 @@ int main()
     int cnt = 0;
     for (int i = 2 ; i <= n ; i++)
     {
-        for (int j = 2 ;
+        if(a[i] = a[i - 1] + 1)cnt++;
+        else cnt = 0;
+        ans = max(ans , cnt + 1);
     }
+    cout << ans;
     return 0;
 }
