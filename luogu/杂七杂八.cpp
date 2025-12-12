@@ -9,7 +9,11 @@ int main()
     {
         cin >> a[i];
     }
-    int cnt[1000005] = {};
-    
+    int ans = 1;
+    int cnt = 0;
+    for (int i = 2 ; i <= n ; i++)
+    {
+        for (int j = 2 ;
+    }
     return 0;
 }
