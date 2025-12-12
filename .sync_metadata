@@ -1,7 +1,7 @@
 # 自动生成的同步元数据
 # 设备: mac
 # 操作系统: macos
-# 生成时间: 2025-12-12T20:03:08+08:00
+# 生成时间: 2025-12-12T20:04:07+08:00
 
 c++/.DS_Store|139902fb70743e8782d1c3e636cc20e023d6a3556da1e0c4769a23e349275399|1761470309|mac|macos
 c++/P8814.cpp|000e7220f8770ed383607bac96140c4c6b3f88f406289009b6c6d788b90cfc83|1761473654|mac|macos
@@ -21,11 +21,11 @@ update.sh|f33ed3d9652cd5e08973132f951490b259a68a9f80d1dfa7fa0bcf9f71bf4ca0|17618
 Dev C++.exe|faad96bbcc51f115c9edd691785d1309e7663b67dcfcf7c11515c3d28c9c0f1f|1762525099|mac|macos
 .sync_merged_view.txt|cd41d72ef1bce3cf3f33345460e5c9d1f0db07825af0805aa2b68e3540536fcd|1762524267|mac|macos
 luogu/P8814.cpp|000e7220f8770ed383607bac96140c4c6b3f88f406289009b6c6d788b90cfc83|1761473654|mac|macos
-luogu/杂七杂八|73ad4e96a7854285c0289703facc0ded7297201af3aa1842037062bd5ff76fa3|1765540984|mac|macos
+luogu/杂七杂八|48420a514f285a49fe8be440ba77f6a33ca5be1833db2429c0458c2edc639316|1765541032|mac|macos
 luogu/杂七杂八.cpp|59eedb04fafa33878e2c9073f1832105944882fc0addd1bc51c27f35ef0412e6|1765540540|mac|macos
-luogu/杂七杂八.dSYM/Contents/Resources/Relocations/aarch64/杂七杂八.yml|6efcb740870d4d14a61a0daa2b467ca6be6c45f1f56eb1e812fe9102a7369d77|1765540984|mac|macos
-luogu/杂七杂八.dSYM/Contents/Resources/DWARF/杂七杂八|874be40306ea0e37ca6d10e68dae45d796347649b735d1877c386202064129f4|1765540984|mac|macos
-luogu/杂七杂八.dSYM/Contents/Info.plist|d1f19e0a98abbd08fefc193c87c329b9f4895ea0e61a73e0c47e8eeb64b62e81|1765540984|mac|macos
+luogu/杂七杂八.dSYM/Contents/Resources/Relocations/aarch64/杂七杂八.yml|6efcb740870d4d14a61a0daa2b467ca6be6c45f1f56eb1e812fe9102a7369d77|1765541032|mac|macos
+luogu/杂七杂八.dSYM/Contents/Resources/DWARF/杂七杂八|acc983103eb888ecf18d1747fd9880f4629bf7a840e0818e67108eaffea7e53f|1765541032|mac|macos
+luogu/杂七杂八.dSYM/Contents/Info.plist|d1f19e0a98abbd08fefc193c87c329b9f4895ea0e61a73e0c47e8eeb64b62e81|1765541032|mac|macos
 luogu/P5681.cpp|8cc3f532e1ca16173bb9ce9e4ad4d7308f8d6cbd8e9bb762f3b3c855ad059887|1761474377|mac|macos
 luogu/P1001.php|1e13df1cadd14cb08928f338376b8d4a701d79f5d20d3cdf56a2e838714d91ae|1761471389|mac|macos
 luogu/P7911.cpp|1b08fe1c95791907b63dcc3e7bff6d0b06e29ee940f59c4b88d12a328ff4e8a1|1761471260|mac|macos
