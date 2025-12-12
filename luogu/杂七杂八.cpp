@@ -12,7 +12,7 @@ int main()
     {
         if (s[i] >= 'a' && s[i] <= 'z')
         {
-            cout <<(s[i] - 'a' + n) % 26 + 'a';
+            cout <<char(s[i] - 'a' + n) % 26 + 'a';
         }
     }
     return 0;
