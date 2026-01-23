@@ -112,7 +112,8 @@ double parallel_buffon_needle_simulation(int num_throws, double needle_length,
         }
         
         // 休眠一段时间避免过度占用CPU
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        // 这里可以根据实际情况调整休眠时间
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
     
     // 完成时显示100%
@@ -136,15 +137,16 @@ double parallel_buffon_needle_simulation(int num_throws, double needle_length,
 }
 
 int main() {
-    
     // 参数设置
+    std::cout << "请输入投针的次数: ";
     double needle_length = 1.0;
     double line_spacing = 2.0;
-    int num_throws = 20000000;  // 2000万次投针
-    int num_threads = std::thread::hardware_concurrency();  // 使用硬件支持的线程数
+    int num_throws;
+    std::cin >> num_throws;
+    int num_threads = std::thread::hardware_concurrency() * 4;  // 使用硬件支持的线程数
     
     if (num_threads == 0) {
-        num_threads = 8;  // 如果无法获取硬件线程数，默认使用8个线程
+        num_threads = 64;  // 如果无法获取硬件线程数，默认使用16个线程
     }
     
     std::cout << "开始蒲丰投针实验..." << std::endl;

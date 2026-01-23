@@ -12,7 +12,7 @@ def cosine_similarity(vec_a, vec_b):
 
 # 准备需要比较的文本
 text1 = input("文本1:")
-text2 = input(”文本2:“）
+text2 = input("文本2:")
 
 # 通过Ollama获取文本向量
 response1 = client.embeddings(model='dengcao/Qwen3-Embedding-4B:Q5_K_M', prompt=text1)
